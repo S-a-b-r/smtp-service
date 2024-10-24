@@ -1,0 +1,22 @@
+services:
+  nginx:
+    container_name: nginx
+    image:
+      nginx:latest
+    volumes:
+      -    ./:/var/www/
+      -   ./devops/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      -   "8081:80"
+    depends_on:
+      -   app
+
+  app:
+    container_name: smtp-service
+    build:
+      context: .
+      dockerfile: devops/app/Dockerfile
+    volumes:
+      -    ./:/var/www
+    ports:
+      -   "9000:9000"
